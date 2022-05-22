@@ -1,4 +1,4 @@
-package com.example.pokedex.ui.roster
+package com.example.pokedex.ui.view.roster
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokedex.databinding.RosterRowBinding

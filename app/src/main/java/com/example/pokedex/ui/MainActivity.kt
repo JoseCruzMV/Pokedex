@@ -2,16 +2,20 @@ package com.example.pokedex.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.core.view.isVisible
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pokedex.databinding.ActivityMainBinding
-import com.example.pokedex.ui.roster.RosterAdapter
+import com.example.pokedex.ui.view.roster.RosterAdapter
+import com.example.pokedex.ui.viewmodel.PokemonListViewModel
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private val fakeList = listOf("a", "b", "c", "d", "e")
+
+    private val pokemonListViewModel: PokemonListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +24,9 @@ class MainActivity : AppCompatActivity() {
 
         val adapter = RosterAdapter(inflater = layoutInflater)
         binding.loading.isVisible = false
+
+
+        pokemonListViewModel.onCreate()
 
         binding.items.apply {
             setAdapter(adapter)
@@ -33,7 +40,11 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
-        adapter.submitList(fakeList)
+        pokemonListViewModel.pokemonList.observe(this, Observer { pokemonList ->
+            adapter.submitList(pokemonList.map { it.name })
+        })
+
+        //adapter.submitList(fakeList)
     }
 
 }
