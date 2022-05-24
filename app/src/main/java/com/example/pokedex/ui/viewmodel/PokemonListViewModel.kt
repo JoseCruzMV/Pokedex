@@ -5,16 +5,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.pokedex.data.model.PokemonModel
 import com.example.pokedex.domain.GetPokemonListUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import kotlin.text.Typography.quote
+import javax.inject.Inject
 
-class PokemonListViewModel: ViewModel() {
+@HiltViewModel
+class PokemonListViewModel @Inject constructor(
+    private val getPokemonListUseCase: GetPokemonListUseCase
+) : ViewModel() {
     val pokemonList = MutableLiveData<List<PokemonModel>>()
-    val getPokemonList = GetPokemonListUseCase()
 
     fun onCreate() {
         viewModelScope.launch {
-            val result = getPokemonList()
+            val result = getPokemonListUseCase()
 
             if (!result.isNullOrEmpty()) {
                 pokemonList.postValue(result)

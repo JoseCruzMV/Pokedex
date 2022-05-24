@@ -10,7 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pokedex.databinding.ActivityMainBinding
 import com.example.pokedex.ui.view.roster.RosterAdapter
 import com.example.pokedex.ui.viewmodel.PokemonListViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
@@ -43,8 +45,6 @@ class MainActivity : AppCompatActivity() {
         pokemonListViewModel.pokemonList.observe(this, Observer { pokemonList ->
             adapter.submitList(pokemonList.map { it.name })
         })
-
-        //adapter.submitList(fakeList)
     }
 
 }
