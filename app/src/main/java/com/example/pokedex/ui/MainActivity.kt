@@ -10,12 +10,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.pokedex.databinding.ActivityMainBinding
 import com.example.pokedex.ui.view.roster.RosterAdapter
 import com.example.pokedex.ui.viewmodel.PokemonListViewModel
+import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private val pokemonListViewModel: PokemonListViewModel by viewModels()
+    private val pokemonListViewModel by inject<PokemonListViewModel> ()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,8 +44,6 @@ class MainActivity : AppCompatActivity() {
         pokemonListViewModel.pokemonList.observe(this, Observer { pokemonList ->
             adapter.submitList(pokemonList.map { it.name })
         })
-
-        //adapter.submitList(fakeList)
     }
 
 }

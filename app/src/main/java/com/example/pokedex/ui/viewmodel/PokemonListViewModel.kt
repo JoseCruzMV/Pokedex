@@ -6,11 +6,11 @@ import androidx.lifecycle.viewModelScope
 import com.example.pokedex.data.model.PokemonModel
 import com.example.pokedex.domain.GetPokemonListUseCase
 import kotlinx.coroutines.launch
-import kotlin.text.Typography.quote
 
-class PokemonListViewModel: ViewModel() {
+class PokemonListViewModel(
+    private val getPokemonList: GetPokemonListUseCase,
+) : ViewModel() {
     val pokemonList = MutableLiveData<List<PokemonModel>>()
-    val getPokemonList = GetPokemonListUseCase()
 
     fun onCreate() {
         viewModelScope.launch {
